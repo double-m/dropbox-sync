@@ -15,6 +15,8 @@ $ cd /path/to/dropbox-sync
 $ composer install
 ```
 
+Complete the OAuth 2 authorization flow to get the token (see [here](https://www.dropbox.com/developers-v1/core/start/php)), then configure your app using every `.dist` file in `config/`.
+
 ### First start
 
 ```
@@ -24,3 +26,4 @@ $ time php app.php
 ### Schedule
 
 I'll use the `cron` service.
+
