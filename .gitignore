@@ -1,5 +1,5 @@
 nbproject/
 vendor/
 
-config/app-token.json
-config/config.php
+src/config/app-token.json
+src/config/config.php

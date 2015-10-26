@@ -1,40 +1,33 @@
 <?php
 
 namespace DropboxFolder;
-use \Dropbox as dbx;
 
 class DropboxFolder
 {
-    private $clientId;
     private $localPath;
     private $remotePath;
-    private $dbxClient;
+    private $client;
 
-    public function __construct($remotePath, $localPath, $appTokenFile, $clientId='PHP-Example/1.0')
+    public function __construct($remotePath, $localPath)
     {
         $this->remotePath = $remotePath;
         $this->localPath = $localPath;
-        $this->clientId = $clientId;
-        
-        $this->init($appTokenFile);
     }
 
-    private function init($appTokenFile)
+    public function initClient($clientClass, $parameters=array())
     {
-        $appTokenJson = file_get_contents($appTokenFile);
-        $parse = json_decode($appTokenJson);
-        $this->dbxClient = new dbx\Client($parse->access_token, $this->clientId);
+        $this->client = new $clientClass($parameters);
     }
 
     public function getAccountInfo()
     {
-        return $this->dbxClient->getAccountInfo();
+        return $this->client->getAccountInfo();
     }
     
     public function getMetadata()
     {
         try {
-            $metadata = $this->dbxClient->getMetadataWithChildren($this->remotePath);
+            $metadata = $this->client->getMetadataWithChildren($this->remotePath);
             return $metadata;
         } catch (Dropbox\Exception $e) {
             echo 'Caught Dropbox Exception: ', $e->getMessage(), PHP_EOL;
